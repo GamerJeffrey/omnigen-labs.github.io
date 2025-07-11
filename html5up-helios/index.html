@@ -1,0 +1,1024 @@
+<!DOCTYPE HTML>
+<!--
+	Helios by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	<head>
+		<title>Omnigen</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<style>
+			* {
+				margin: 0;
+				padding: 0;
+				box-sizing: border-box;
+			}
+
+			body {
+				background: #ffffff;
+				overflow: hidden;
+				font-family: 'Arial', sans-serif;
+				height: 100vh;
+				position: relative;
+				cursor: pointer;
+			}
+
+			/* Header styles */
+			#header {
+				position: fixed;
+				top: 0;
+				left: 0;
+				width: 100%;
+				height: 100vh;
+				z-index: 10;
+				display: flex;
+				flex-direction: column;
+				justify-content: space-between;
+				pointer-events: none;
+			}
+
+			.inner {
+				text-align: center;
+				padding: 4rem 2rem 2rem 2rem;
+				pointer-events: auto;
+			}
+
+			#header header h1 {
+				font-family: 'Orbitron', monospace;
+				font-size: 4rem;
+				font-weight: 400;
+				color: #000000;
+				margin: 0;
+				letter-spacing: 0.1em;
+			}
+
+			#header header h1 a {
+				color: inherit;
+				text-decoration: none;
+			}
+
+			#header header hr {
+				border: 0;
+				height: 1px;
+				background: rgba(0, 0, 0, 0.2);
+				margin: 1rem auto;
+				width: 200px;
+			}
+
+			#header header p {
+				font-size: 1.2rem;
+				color: rgba(0, 0, 0, 0.7);
+				margin: 0;
+			}
+
+			/* Navigation */
+			#nav {
+				position: fixed;
+				top: 2rem;
+				left: 50%;
+				transform: translateX(-50%);
+				z-index: 1000;
+				pointer-events: auto;
+			}
+
+			#nav ul {
+				list-style: none;
+				padding: 0;
+				margin: 0;
+				display: flex;
+				gap: 3rem;
+			}
+
+			#nav ul li a {
+				display: block;
+				padding: 0.4rem 0;
+				background: transparent;
+				color: #000000;
+				text-decoration: none;
+				border: none;
+				font-size: 0.8rem;
+				text-transform: uppercase;
+				letter-spacing: 0.1em;
+				transition: all 0.3s ease;
+				opacity: 0.7;
+			}
+
+			#nav ul li a:hover {
+				opacity: 1;
+				transform: translateY(-1px);
+			}
+
+			/* Footer description */
+			#header footer {
+				text-align: center;
+				padding: 2rem;
+				pointer-events: auto;
+			}
+
+			#header footer p {
+				font-size: 1rem;
+				color: rgba(0, 0, 0, 0.7);
+				margin: 0;
+				font-weight: 300;
+			}
+
+			/* Animation Container */
+			.animation-container {
+				position: absolute;
+				width: 100%;
+				height: 100%;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				z-index: 5;
+			}
+
+			/* DNA Helix */
+			.dna-helix {
+				position: absolute;
+				width: 120px;
+				height: 200px;
+				transform-style: preserve-3d;
+				perspective: 1000px;
+				transition: opacity 0.5s ease;
+			}
+
+			.dna-helix.forward {
+				animation: helixToNode 3s ease-in-out forwards;
+			}
+
+			.dna-helix.reverse {
+				opacity: 0;
+				transform: scale(0) rotateY(1800deg);
+				animation: nodeToHelix 3s ease-in-out forwards;
+			}
+
+			.dna-helix.slow-spin {
+				opacity: 1;
+				transform: scale(1) rotateY(0deg);
+				animation: slowHelixSpin 8s linear infinite;
+			}
+
+			.dna-helix.sequencing {
+				opacity: 0;
+				transform: scale(0);
+				animation: helixToSequencing 2s ease-in-out forwards;
+			}
+
+			@keyframes helixToNode {
+				0% {
+					opacity: 1;
+					transform: scale(1) rotateY(0deg);
+				}
+				60% {
+					opacity: 1;
+					transform: scale(1) rotateY(1440deg);
+				}
+				100% {
+					opacity: 0;
+					transform: scale(0) rotateY(1800deg);
+				}
+			}
+
+			@keyframes nodeToHelix {
+				0% {
+					opacity: 0;
+					transform: scale(0) rotateY(1800deg);
+				}
+				40% {
+					opacity: 1;
+					transform: scale(1) rotateY(1440deg);
+				}
+				100% {
+					opacity: 1;
+					transform: scale(1) rotateY(0deg);
+				}
+			}
+
+			@keyframes slowHelixSpin {
+				from { transform: scale(1) rotateY(0deg); }
+				to { transform: scale(1) rotateY(360deg); }
+			}
+
+			@keyframes helixToSequencing {
+				0% {
+					opacity: 1;
+					transform: scale(1) rotateY(0deg);
+				}
+				50% {
+					opacity: 0.5;
+					transform: scale(1.5) rotateY(180deg);
+				}
+				100% {
+					opacity: 0;
+					transform: scale(0) rotateY(360deg);
+				}
+			}
+
+			.helix-strand {
+				position: absolute;
+				width: 100%;
+				height: 100%;
+				transform-style: preserve-3d;
+			}
+
+			.helix-strand.spinning {
+				animation: continuousSpin 1s linear infinite;
+			}
+
+			@keyframes continuousSpin {
+				from { transform: rotateY(0deg); }
+				to { transform: rotateY(360deg); }
+			}
+
+			.helix-base {
+				position: absolute;
+				width: 100%;
+				height: 3px;
+				left: 0;
+				transform-style: preserve-3d;
+			}
+
+			.base-left, .base-right {
+				position: absolute;
+				width: 15px;
+				height: 3px;
+				border-radius: 1.5px;
+				background: #000000;
+				box-shadow: 0 0 6px rgba(0, 0, 0, 0.6);
+			}
+
+			.base-left {
+				left: 15px;
+				transform: translateZ(25px);
+			}
+
+			.base-right {
+				right: 15px;
+				transform: translateZ(-25px);
+			}
+
+			.base-connector {
+				position: absolute;
+				width: 70px;
+				height: 1px;
+				background: rgba(0, 0, 0, 0.4);
+				left: 25px;
+				top: 1px;
+			}
+
+			/* Center Node */
+			.center-node {
+				position: absolute;
+				width: 4px;
+				height: 4px;
+				background: #000000;
+				border-radius: 50%;
+				opacity: 0;
+				box-shadow: 0 0 6px rgba(0, 0, 0, 0.6);
+				transition: opacity 0.3s ease;
+				z-index: 10;
+			}
+
+			.center-node.forward {
+				animation: nodeTransition 0.75s ease-in-out 3s forwards;
+			}
+
+			.center-node.reverse {
+				opacity: 0;
+				transform: scale(0);
+				animation: nodeTransitionReverse 0.75s ease-in-out 2s forwards;
+			}
+
+			@keyframes nodeTransition {
+				0% {
+					opacity: 0;
+					transform: scale(0);
+				}
+				50% {
+					opacity: 1;
+					transform: scale(2);
+				}
+				100% {
+					opacity: 0;
+					transform: scale(0);
+				}
+			}
+
+			@keyframes nodeTransitionReverse {
+				0% {
+					opacity: 0;
+					transform: scale(0);
+				}
+				50% {
+					opacity: 1;
+					transform: scale(2);
+				}
+				100% {
+					opacity: 0;
+					transform: scale(0);
+				}
+			}
+
+			/* WebGL Canvas for 8D Network */
+			.webgl-network {
+				position: absolute;
+				width: 100%;
+				height: 100%;
+				opacity: 0;
+				transform: scale(20);
+				transform-origin: center;
+				transition: opacity 0.5s ease, transform 0.5s ease;
+			}
+
+			.webgl-network.forward {
+				animation: networkZoomOut 2s cubic-bezier(0.25, 0.46, 0.45, 0.94) 3.75s forwards;
+			}
+
+			.webgl-network.reverse {
+				opacity: 1;
+				transform: scale(1);
+				animation: networkZoomIn 2s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+			}
+
+			@keyframes networkZoomOut {
+				0% {
+					opacity: 0;
+					transform: scale(20);
+				}
+				15% {
+					opacity: 1;
+					transform: scale(20);
+				}
+				100% {
+					opacity: 1;
+					transform: scale(1);
+				}
+			}
+
+			@keyframes networkZoomIn {
+				0% {
+					opacity: 1;
+					transform: scale(1);
+				}
+				85% {
+					opacity: 1;
+					transform: scale(20);
+				}
+				100% {
+					opacity: 0;
+					transform: scale(20);
+				}
+			}
+
+			#networkCanvas {
+				display: block;
+				width: 100%;
+				height: 100%;
+			}
+
+			/* DNA Sequencing Animation */
+			.sequencing-container {
+				position: absolute;
+				width: 100%;
+				height: 100%;
+				opacity: 0;
+				transition: opacity 0.3s ease;
+				pointer-events: none;
+			}
+
+			.sequencing-container.active {
+				opacity: 1;
+			}
+
+			.scanner-beam {
+				position: absolute;
+				left: 50%;
+				top: 50%;
+				width: 300px;
+				height: 2px;
+				background: linear-gradient(90deg, 
+					transparent 0%, 
+					rgba(0, 150, 255, 0.3) 20%, 
+					rgba(0, 150, 255, 1) 50%, 
+					rgba(0, 150, 255, 0.3) 80%, 
+					transparent 100%);
+				transform: translate(-50%, -100px);
+				animation: scanDNA 3s ease-in-out forwards;
+				box-shadow: 0 0 10px rgba(0, 150, 255, 0.8);
+			}
+
+			@keyframes scanDNA {
+				0% {
+					transform: translate(-50%, -150px);
+					opacity: 0;
+				}
+				10% {
+					opacity: 1;
+				}
+				90% {
+					transform: translate(-50%, 100px);
+					opacity: 1;
+				}
+				100% {
+					transform: translate(-50%, 150px);
+					opacity: 0;
+				}
+			}
+
+			.sequence-readout {
+				position: absolute;
+				left: 30px;
+				top: 50%;
+				transform: translateY(-50%);
+				background: rgba(255, 255, 255, 0.95);
+				border: 2px solid #0096ff;
+				border-radius: 6px;
+				padding: 12px;
+				font-family: 'Courier New', monospace;
+				color: #000000;
+				font-size: 10px;
+				width: 180px;
+				box-shadow: 0 0 15px rgba(0, 150, 255, 0.3);
+			}
+
+			.readout-title {
+				text-align: center;
+				font-size: 11px;
+				font-weight: bold;
+				margin-bottom: 10px;
+				color: #0096ff;
+				text-shadow: 0 0 5px rgba(0, 150, 255, 0.5);
+			}
+
+			.sequence-line {
+				margin: 2px 0;
+				opacity: 0;
+				letter-spacing: 1px;
+				overflow: hidden;
+				white-space: nowrap;
+				width: 0;
+			}
+
+			.sequence-line.typing {
+				animation: sequenceType 1s ease-out forwards;
+			}
+
+			@keyframes sequenceType {
+				0% {
+					opacity: 1;
+					width: 0;
+				}
+				100% {
+					opacity: 1;
+					width: 100%;
+				}
+			}
+
+			.base-A { color: #ff6b6b; }
+			.base-T { color: #4ecdc4; }
+			.base-C { color: #45b7d1; }
+			.base-G { color: #96ceb4; }
+
+			.scan-progress {
+				margin-top: 10px;
+				padding-top: 8px;
+				border-top: 1px solid #0096ff;
+				text-align: center;
+				font-size: 9px;
+			}
+
+			.progress-bar {
+				width: 100%;
+				height: 3px;
+				background: rgba(0, 150, 255, 0.2);
+				border-radius: 2px;
+				margin: 4px 0;
+				overflow: hidden;
+			}
+
+			.progress-fill {
+				height: 100%;
+				background: #0096ff;
+				width: 0;
+				animation: progressFill 3s ease-out forwards;
+				box-shadow: 0 0 5px #0096ff;
+			}
+
+			@keyframes progressFill {
+				0% { width: 0%; }
+				100% { width: 100%; }
+			}
+
+			.dna-helix.scanning {
+				opacity: 1;
+				transform: scale(1) rotateY(0deg);
+				animation: helixScanSpin 3s linear forwards;
+			}
+
+			.dna-helix.scanned {
+				opacity: 1;
+				transform: scale(1) rotateY(0deg);
+				animation: slowHelixSpin 8s linear infinite;
+			}
+
+			@keyframes helixScanSpin {
+				from { transform: scale(1) rotateY(0deg); }
+				to { transform: scale(1) rotateY(1080deg); }
+			}
+
+			/* Responsive */
+			@media screen and (max-width: 736px) {
+				#header footer p {
+					font-size: 0.9rem;
+				}
+
+				#nav {
+					top: 1rem;
+					left: 50%;
+					transform: translateX(-50%);
+				}
+
+				#nav ul {
+					flex-direction: row;
+					gap: 2rem;
+					flex-wrap: wrap;
+					justify-content: center;
+				}
+
+				#nav ul li a {
+					padding: 0.3rem 0;
+					font-size: 0.7rem;
+				}
+			}
+		</style>
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+		<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+	</head>
+	<body class="homepage is-preload">
+		<div id="page-wrapper">
+
+			<!-- Header -->
+			<div id="header">
+				<!-- Nav -->
+				<nav id="nav">
+					<ul>
+						<li><a href="index.html">Home</a></li>
+						<li><a href="left-sidebar.html">About</a></li>
+						<li><a href="right-sidebar.html">Services</a></li>
+						<li><a href="no-sidebar.html">Contact</a></li>
+					</ul>
+				</nav>
+			</div>
+
+			<!-- Bottom Description -->
+			<div style="position: fixed; bottom: 2rem; left: 0; width: 100%; text-align: center; z-index: 1000; pointer-events: none;">
+				<p style="font-size: 1rem; color: rgba(0, 0, 0, 0.7); margin: 0; font-weight: 300;">The world's first trustless health-data security solution</p>
+			</div>
+
+			<!-- DNA Animation Container -->
+			<div class="animation-container">
+				<!-- DNA Helix -->
+				<div class="dna-helix forward" id="dnaHelix">
+					<div class="helix-strand spinning" id="helixStrand"></div>
+				</div>
+				
+				<!-- Center Node -->
+				<div class="center-node forward" id="centerNode"></div>
+				
+				<!-- 8D Hypercube Network -->
+				<div class="webgl-network forward" id="webglNetwork">
+					<canvas id="networkCanvas" width="1500" height="1500"></canvas>
+				</div>
+
+				<!-- DNA Sequencing -->
+				<div class="sequencing-container" id="sequencingContainer"></div>
+			</div>
+
+		</div>
+
+		<script>
+			class Interactive8DNetworkAnimation {
+				constructor() {
+					this.animationState = 'forward';
+					this.isAnimating = false;
+					this.networkInitialized = false;
+					this.init();
+				}
+
+				init() {
+					this.createDNAHelix();
+					this.setupClickHandler();
+					setTimeout(() => {
+						this.init8DNetwork();
+						this.networkInitialized = true;
+						setTimeout(() => {
+							this.isAnimating = false;
+						}, 2000);
+					}, 2000);
+				}
+
+				setupClickHandler() {
+					document.addEventListener('click', (e) => {
+						// Don't trigger animation if clicking on navigation or UI elements
+						if (e.target.closest('#nav') || e.target.closest('#header .inner') || 
+							e.target.closest('#header footer') || e.target.closest('a')) {
+							return;
+						}
+						
+						if (this.isAnimating) return;
+						
+						this.isAnimating = true;
+						
+						switch(this.animationState) {
+							case 'forward':
+								this.reverseAnimation();
+								break;
+							case 'reverse':
+								this.sequencingAnimation();
+								break;
+							case 'sequencing':
+								this.forwardAnimation();
+								break;
+						}
+					});
+				}
+
+				reverseAnimation() {
+					const dnaHelix = document.getElementById('dnaHelix');
+					const centerNode = document.getElementById('centerNode');
+					const webglNetwork = document.getElementById('webglNetwork');
+					const helixStrand = document.getElementById('helixStrand');
+					
+					this.animationState = 'reverse';
+					
+					dnaHelix.className = 'dna-helix';
+					dnaHelix.style.opacity = '0';
+					centerNode.className = 'center-node reverse';
+					webglNetwork.className = 'webgl-network reverse';
+					
+					setTimeout(() => {
+						dnaHelix.className = 'dna-helix reverse';
+						dnaHelix.style.opacity = '';
+					}, 2750);
+					
+					setTimeout(() => {
+						dnaHelix.className = 'dna-helix slow-spin';
+						helixStrand.className = 'helix-strand';
+						this.isAnimating = false;
+					}, 5750);
+				}
+
+				sequencingAnimation() {
+					const dnaHelix = document.getElementById('dnaHelix');
+					const sequencingContainer = document.getElementById('sequencingContainer');
+					
+					this.animationState = 'sequencing';
+					
+					dnaHelix.className = 'dna-helix scanning';
+					
+					setTimeout(() => {
+						this.createSequencingDisplay();
+						sequencingContainer.className = 'sequencing-container active';
+					}, 100);
+					
+					setTimeout(() => {
+						dnaHelix.className = 'dna-helix scanned';
+					}, 3000);
+					
+					setTimeout(() => {
+						this.isAnimating = false;
+					}, 6000);
+				}
+
+				forwardAnimation() {
+					const dnaHelix = document.getElementById('dnaHelix');
+					const centerNode = document.getElementById('centerNode');
+					const webglNetwork = document.getElementById('webglNetwork');
+					const helixStrand = document.getElementById('helixStrand');
+					const sequencingContainer = document.getElementById('sequencingContainer');
+					
+					this.animationState = 'forward';
+					
+					sequencingContainer.className = 'sequencing-container';
+					sequencingContainer.innerHTML = '';
+					
+					dnaHelix.className = 'dna-helix forward';
+					centerNode.className = 'center-node forward';
+					webglNetwork.className = 'webgl-network forward';
+					helixStrand.className = 'helix-strand spinning';
+					
+					setTimeout(() => {
+						this.isAnimating = false;
+					}, 6000);
+				}
+
+				createSequencingDisplay() {
+					const container = document.getElementById('sequencingContainer');
+					
+					const scanner = document.createElement('div');
+					scanner.className = 'scanner-beam';
+					container.appendChild(scanner);
+					
+					const readout = document.createElement('div');
+					readout.className = 'sequence-readout';
+					
+					const title = document.createElement('div');
+					title.className = 'readout-title';
+					title.textContent = 'DNA SEQUENCING';
+					readout.appendChild(title);
+					
+					const sequences = [
+						'ATGCGATCGT',
+						'GCATGCTAG',
+						'TAGCATGCA',
+						'CATGCTAG',
+						'ATCGATCG'
+					];
+					
+					sequences.forEach((seq, index) => {
+						const line = document.createElement('div');
+						line.className = 'sequence-line';
+						
+						let coloredSeq = '';
+						for (let i = 0; i < seq.length; i++) {
+							const base = seq[i];
+							coloredSeq += `<span class="base-${base}">${base}</span>`;
+						}
+						
+						line.innerHTML = `${String(index + 1).padStart(2, '0')}: ${coloredSeq}`;
+						readout.appendChild(line);
+						
+						setTimeout(() => {
+							line.classList.add('typing');
+						}, 500 + index * 400);
+					});
+					
+					const progress = document.createElement('div');
+					progress.className = 'scan-progress';
+					progress.innerHTML = `
+						<div>SCAN PROGRESS</div>
+						<div class="progress-bar">
+							<div class="progress-fill"></div>
+						</div>
+						<div>ANALYZING STRUCTURE...</div>
+					`;
+					readout.appendChild(progress);
+					
+					container.appendChild(readout);
+				}
+
+				createDNAHelix() {
+					const helixStrand = document.getElementById('helixStrand');
+					
+					for (let i = 0; i < 25; i++) {
+						const basePair = document.createElement('div');
+						basePair.className = 'helix-base';
+						basePair.style.top = (i * 8) + 'px';
+						basePair.style.transform = `rotateY(${i * 36}deg)`;
+						
+						const leftBase = document.createElement('div');
+						leftBase.className = 'base-left';
+						
+						const rightBase = document.createElement('div');
+						rightBase.className = 'base-right';
+						
+						const connector = document.createElement('div');
+						connector.className = 'base-connector';
+						
+						basePair.appendChild(leftBase);
+						basePair.appendChild(rightBase);
+						basePair.appendChild(connector);
+						helixStrand.appendChild(basePair);
+					}
+				}
+
+				init8DNetwork() {
+					const canvas = document.getElementById("networkCanvas");
+					const gl = canvas.getContext("webgl", { antialias: true }) || canvas.getContext("experimental-webgl", { antialias: true });
+
+					if (!gl) {
+						console.error("WebGL not supported");
+						return;
+					}
+
+					const vertexShaderSource = `
+					  attribute vec2 pos;
+					  attribute float col;
+					  varying vec4 variableC;
+					  void main() {
+						if (col == 0.1) {
+						  variableC = vec4(0.0, 0.0, 0.0, 0.9);
+						} else if (col == 0.2) {
+						  variableC = vec4(1.0, 1.0, 1.0, 0.9);
+						} else {
+						  variableC = vec4(0.0, 0.0, 0.0, 0.9);
+						}
+						gl_Position = vec4(pos, 0.0, 1.0);
+					  }
+					`;
+
+					const fragmentShaderSource = `
+					  precision highp float;
+					  varying vec4 variableC;
+					  void main() {
+						gl_FragColor = variableC;
+					  }
+					`;
+
+					function compileShader(type, source) {
+					  const shader = gl.createShader(type);
+					  gl.shaderSource(shader, source);
+					  gl.compileShader(shader);
+					  if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS)) {
+						throw new Error(gl.getShaderInfoLog(shader));
+					  }
+					  return shader;
+					}
+
+					const vertexShader = compileShader(gl.VERTEX_SHADER, vertexShaderSource);
+					const fragmentShader = compileShader(gl.FRAGMENT_SHADER, fragmentShaderSource);
+
+					const program = gl.createProgram();
+					gl.attachShader(program, vertexShader);
+					gl.attachShader(program, fragmentShader);
+					gl.linkProgram(program);
+					gl.useProgram(program);
+
+					const posLoc = gl.getAttribLocation(program, "pos");
+					const colLoc = gl.getAttribLocation(program, "col");
+
+					function randn() {
+					  let u = Math.random();
+					  let v = Math.random();
+					  return Math.sqrt(-2 * Math.log(u)) * Math.cos(2 * Math.PI * v);
+					}
+
+					const d = [[], [], [], []];
+					const n = [];
+					const edges = [];
+
+					for (let e = 0; e < 8; e++) {
+					  for (let a = e + 1; a < 8; a++) {
+						let base = new Array(8).fill(0);
+						base[e] = 2;
+						base[a] = 2;
+						n.push(base.map(v => v - 2));
+						base[a] = -2;
+						n.push(base.map(v => v - 2));
+						base[e] = -2;
+						n.push(base.map(v => v - 2));
+						base[a] = 2;
+						n.push(base.map(v => v - 2));
+					  }
+					}
+
+					for (let e = 0; e < 8; e++) {
+					  let base = new Array(8).fill(0);
+					  base[e] = 2;
+					  n.push(base.map(v => v - 2));
+					  base[e] = -2;
+					  n.push(base.map(v => v - 2));
+					}
+
+					let tripleCount = 0;
+					const targetTriples = 248;
+					for (let e = 0; e < 8 && tripleCount < targetTriples; e++) {
+					  for (let a = e + 1; a < 8 && tripleCount < targetTriples; a++) {
+						for (let b = a + 1; b < 8 && tripleCount < targetTriples; b++) {
+						  if (tripleCount + 8 <= targetTriples) {
+							let base = new Array(8).fill(0);
+							base[e] = 2;
+							base[a] = 2;
+							base[b] = 2;
+							n.push(base.map(v => v - 2));
+							base[b] = -2;
+							n.push(base.map(v => v - 2));
+							base[a] = -2;
+							n.push(base.map(v => v - 2));
+							base[b] = 2;
+							n.push(base.map(v => v - 2));
+							base[e] = -2;
+							n.push(base.map(v => v - 2));
+							base[b] = -2;
+							n.push(base.map(v => v - 2));
+							base[a] = 2;
+							n.push(base.map(v => v - 2));
+							base[b] = 2;
+							n.push(base.map(v => v - 2));
+							tripleCount += 8;
+						  }
+						}
+					  }
+					}
+
+					for (let i = 0; i < n.length; i++) {
+					  for (let j = i + 1; j < n.length; j++) {
+						const dist = n[i].reduce((acc, v, k) => acc + Math.pow(v - n[j][k], 2), 0);
+						if (dist === 8) {
+						  edges.push(i, j);
+						}
+					  }
+					}
+
+					function normalize(vec) {
+					  const len = Math.sqrt(vec.reduce((acc, v) => acc + v * v, 0));
+					  return len > 0 ? vec.map(v => v / len) : vec;
+					}
+
+					function orthonormalize() {
+					  for (let i = 0; i < 4; i++) {
+						for (let j = 0; j < i; j++) {
+						  let dot = d[i].reduce((acc, v, k) => acc + v * d[j][k], 0);
+						  for (let k = 0; k < 8; k++) d[i][k] -= dot * d[j][k];
+						}
+						d[i] = normalize(d[i]);
+					  }
+					}
+
+					for (let i = 0; i < 4; i++) {
+					  d[i] = Array.from({ length: 8 }, randn);
+					}
+					orthonormalize();
+
+					const posBuffer = gl.createBuffer();
+					const colBuffer = gl.createBuffer();
+					const indexBuffer = gl.createBuffer();
+
+					const f = new Float32Array(2 * n.length);
+					const s = new Float32Array(n.length);
+					const v = new Uint16Array(edges);
+
+					gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, indexBuffer);
+					gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, v, gl.STATIC_DRAW);
+
+					function drawScene() {
+					  let centerX = 0, centerY = 0;
+					  for (let i = 0; i < n.length; i++) {
+						const projX = d[0].reduce((acc, v, j) => acc + v * n[i][j], 0) / 6;
+						const projY = d[1].reduce((acc, v, j) => acc + v * n[i][j], 0) / 6;
+						centerX += projX;
+						centerY += projY;
+					  }
+					  centerX /= n.length;
+					  centerY /= n.length;
+
+					  for (let i = 0; i < n.length; i++) {
+						const projX = d[0].reduce((acc, v, j) => acc + v * n[i][j], 0) / 6;
+						const projY = d[1].reduce((acc, v, j) => acc + v * n[i][j], 0) / 6;
+						f[2 * i] = projX - centerX;
+						f[2 * i + 1] = projY - centerY;
+						
+						s[i] = (i % 2 === 0) ? 0.1 : 0.2;
+					  }
+
+					  gl.viewport(0, 0, canvas.width, canvas.height);
+					  gl.clearColor(1, 1, 1, 1);
+					  gl.clear(gl.COLOR_BUFFER_BIT);
+
+					  gl.bindBuffer(gl.ARRAY_BUFFER, posBuffer);
+					  gl.bufferData(gl.ARRAY_BUFFER, f, gl.DYNAMIC_DRAW);
+					  gl.vertexAttribPointer(posLoc, 2, gl.FLOAT, false, 0, 0);
+					  gl.enableVertexAttribArray(posLoc);
+
+					  gl.bindBuffer(gl.ARRAY_BUFFER, colBuffer);
+					  gl.bufferData(gl.ARRAY_BUFFER, s, gl.DYNAMIC_DRAW);
+					  gl.vertexAttribPointer(colLoc, 1, gl.FLOAT, false, 0, 0);
+					  gl.enableVertexAttribArray(colLoc);
+
+					  gl.drawElements(gl.LINES, v.length, gl.UNSIGNED_SHORT, 0);
+					}
+
+					let lastTime = performance.now();
+
+					function animate(now) {
+					  const dt = now - lastTime;
+					  lastTime = now;
+
+					  for (let i = 0; i < 8; i++) {
+						d[0][i] += 0.001 * d[2][i];
+						d[1][i] += 0.001 * d[3][i];
+						d[2][i] += 0.001 * randn();
+						d[3][i] += 0.001 * randn();
+					  }
+
+					  orthonormalize();
+					  drawScene();
+					  requestAnimationFrame(animate);
+					}
+
+					animate(lastTime);
+				}
+			}
+
+			// Start the animation when page loads
+			window.addEventListener('load', () => {
+				new Interactive8DNetworkAnimation();
+			});
+		</script>
+
+	</body>
+</html>
